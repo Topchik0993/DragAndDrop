@@ -12,28 +12,29 @@ code {
     monospace;
 }
 
+
 .wrapper {
-  width: 1800px;
+  width: 2000px;
   height: 100px;
-  outline: 2px solid #000;
+  outline: 1px solid #000;
   margin: 20px;
   display: flex;
   background-color: burlywood;
-  margin-bottom: 0px;
+  margin-bottom: 2px;
 }
 
 .fig{
   text-align: center;
   outline: 2px solid #000;
-  width: 20%;
+  width: 360px;
 }
 .canv{
   text-align: center;
-  width: 80%;
+  width: 1500px;
 }
 .content{
   display: flex;
-  width: 1800px;
+  width: 2000px;
   height: 1000px;
   outline: 2px solid #000;
   margin-left: 20px;
@@ -42,13 +43,12 @@ code {
 .circle {
   background: url('circle.png') no-repeat center;
   width: 362px;
-  height: 400px;      
+  height: 200px;      
 }
 .rect {
   background: url('rect.png') no-repeat center;
-  padding-top: 100px;
   width: 362px;
-  height: 400px;      
+  height: 200px;      
 }
 
 

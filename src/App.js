@@ -1,36 +1,31 @@
-import React from "react";
-import go from "./canvas/canvas";
+import React,{useRef, useState, useEffect, Component} from "react";
+import {Canvas, klack} from "./canvas/canvas";
 
-
-const styles = {
-  canvas:{
-    width: '1440px',
-    heihgt: '500px',
-    outline: '1px solid',
-    backgroundColor: 'beige'
-  }
-}
 
 function App() {
   return (
 <div>
-  <div className="wrapper">
-    <div className="fig">
-      <h1>Figures</h1>   
-    </div>
-    <div className="canv"> 
+    <div className="wrapper">
+      <div className="fig">
+       <h1>Figures</h1>   
+      </div>
+      <div className="canv"> 
       <h1 align="center">Canvas</h1>
-    </div> 
-  </div>
+      </div> 
+    </div>
   <div className="content">
     <div className="obj">
-      <button type="button" id="circle" className="circle" onClick={go}> </button>
+      <button type="button" value="circle" id="circle" className="circle" > </button>
       <div>
-      <button type="button" id="rect" className="rect" onClick={go}></button>
+      <button type="button" value="rect" id="rect" className="rect" onMouseDown={klack}></button>
       </div>
     </div>
-    <canvas id="myCanvas" style={styles.canvas}></canvas>
+    <Canvas draw={(canvas, ctx)=>{
+      ctx.fillRect(50,50,70,70);
+    }}
+    />
   </div>
+ 
 </div>)
 }
 
