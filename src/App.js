@@ -1,4 +1,4 @@
-import React,{useRef, useState, useEffect, Component} from "react";
+import React from "react";
 import {Canvas} from "./canvas/canvas";
 
 
@@ -17,7 +17,7 @@ function App() {
     <div className="obj">
       <button type="button" value="circle" id="circle" className="circle" > </button>
       <div>
-      <button type="button" value="rect" id="rect" className="rect" ></button>
+      <button type="button"  value="rect" id="rect" className="rect" ></button>
       </div>
     </div>
     <Canvas/>

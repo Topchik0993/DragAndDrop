@@ -1,5 +1,4 @@
-import React, { Component, createContext } from 'react'
-import reactDom from 'react-dom';
+import React, { Component } from 'react'
 
 const styles = {
     canvas:{ 
@@ -58,6 +57,7 @@ class Canvas extends Component {
                 this.sa = circlS.sa;
                 this.se = circlS.ea;
                 this.cl = circlS.cl;
+                
             }
             draw(){
                 ctx.fillStyle = 'blue';
@@ -72,7 +72,6 @@ class Canvas extends Component {
                 ctx.stroke();
             }
         } 
-
       circ.onmousedown = ()=>{
             isPressed = true;
             isRect = false;
@@ -80,11 +79,11 @@ class Canvas extends Component {
       rect.onmousedown = ()=>{
           isPressed = isRect = true;
       }
+      
       cnv.onmouseup = ()=>{
         if(isPressed){
            ctx.beginPath();
            if(isRect){
-            //ctx.fillRect((mouse.x - 382) - rectS.w/2 ,(mouse.y - 122) - rectS.h/2, rectS.w, rectS.h);
             fig.push(new Rect(mouse.x ,mouse.y))
             isRect = false;
             
@@ -93,37 +92,88 @@ class Canvas extends Component {
            fig.push(new Circle(mouse.x, mouse.y))
            
            }
+           ctx.closePath();
            isPressed = false;
            
         }
+
+        var isInArea = (fig)=>{
+            if (fig instanceof Rect){
+            return mouse.x >= fig.x-fig.w/2 && mouse.x <= fig.x + fig.w/2 && mouse.y >= fig.y-fig.h/2 && mouse.y <= fig.y + fig.h/2; 
+            }
+            else if (fig instanceof Circle){
+            return mouse.x >= fig.x-fig.r && mouse.x <= fig.x + fig.r && mouse.y >= fig.y-fig.r && mouse.y <= fig.y + fig.r
+            }
+        }
+
         setInterval(function() {
             ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
             for (i in fig) {
                 fig[i].draw();
         
-                if(isCursorInRect(fig[i])){
-                    fig[i].stroke();
+                if(isInArea(fig[i])){
+                    //fig[i].stroke();
                 }
             }
-        },80);
+            if (selected){
+                selected.stroke();
+                selected.x = mouse.x
+                selected.y = mouse.y
 
-        var isCursorInRect = (rects)=>{
-            if (rects instanceof Rect){
-            return mouse.x >= rects.x-rects.w/2 && mouse.x <= rects.x + rects.w/2 && mouse.y >= rects.y-rects.h/2 && mouse.y <= rects.y + rects.h/2; 
             }
-            else if (rects instanceof Circle){
-            return mouse.x >= rects.x-rects.r && mouse.x <= rects.x + rects.r && mouse.y >= rects.y-rects.r && mouse.y <= rects.y + rects.r
+            if(selected instanceof Rect){
+                if(selected.x + selected.w/2 > this.canvas.width+382){
+                    selected.x= this.canvas.width + 380 - selected.w/2;
+                    selected = false;
+                }
+                else if(selected.y + selected.h/2 > this.canvas.height + 122){
+                    selected.y = this.canvas.height + 120 - selected.h/2
+                    selected = false;
+                }
+                else if(selected.x - selected.w/2 < 382){
+                    selected.x = selected.w/2 + 382
+                    selected = false;
+                }
+                else if(selected.y - selected.h/2 < 122){
+                    selected.y = selected.h/2 + 122;
+                    selected = false
+                }
             }
-        }
+            else if (selected instanceof Circle) {
+                if(selected.x + selected.r > this.canvas.width+382){
+                    selected.x= this.canvas.width + 380 - selected.r;
+                    selected = false;
+                }
+                else if(selected.y + selected.r > this.canvas.height + 122){
+                    selected.y = this.canvas.height + 120 - selected.r
+                    selected = false;
+                }
+                else if(selected.x - selected.r < 382){
+                    selected.x = selected.r + 382
+                    selected = false;
+                }
+                else if(selected.y - selected.r < 122){
+                    selected.y = selected.r + 122;
+                    selected = false
+                }
+            }
+        
+            
+        },30);
+
+        
         window.onmousedown = function() {
             if (!selected){
                 for (i in fig) {
                     var i;
-                    if(isCursorInRect(fig[i])){
+                    if(isInArea(fig[i])){
                     selected = fig[i];
                     }
                 }
             }
+        }
+        window.onmouseup = function() { 
+            selected = false;
         }
         
     }
@@ -137,8 +187,12 @@ class Canvas extends Component {
 }
 
 
+
+
 window.onmousemove = function(e){
     mouse.x = e.pageX;
     mouse.y = e.pageY;
 };
 export { Canvas}
+
+
