@@ -1,5 +1,5 @@
 import React from "react";
-import {Canvas} from "./canvas/canvas";
+import Canvas from "./canvas/canvas";
 
 
 function App() {
@@ -15,9 +15,9 @@ function App() {
     </div>
   <div className="content">
     <div className="obj">
-      <button type="button" value="circle" id="circle" className="circle" > </button>
+      <button   id="circle" className="circle" > </button>
       <div>
-      <button type="button"  value="rect" id="rect" className="rect" ></button>
+      <button    id="rect" className="rect" ></button>
       </div>
     </div>
     <Canvas/>
